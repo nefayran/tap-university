@@ -7,9 +7,7 @@ import { Subject } from 'src/domain/schemas/Subject';
 
 @Injectable()
 export class SubjectService implements IService {
-  constructor(
-    @InjectModel(Subject.name) private subjectModel: Model<Subject>,
-  ) {}
+  constructor(@InjectModel(Subject.name) private subjectModel: Model<Subject>) {}
 
   async Get(ids: string[]) {
     const s: Subject = {

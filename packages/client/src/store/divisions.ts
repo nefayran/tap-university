@@ -28,5 +28,5 @@ export const useDivisionsStore = defineStore('Division', {
       const [error, response] = await putDivision(payload)
       return [error, response]
     }
-  },
+  }
 })

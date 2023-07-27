@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateDivisionDto } from 'src/dtos/CreateDivisionDto';
@@ -16,9 +10,7 @@ import { uniqDivisionNameRuleCheck } from 'src/domain/rules/UniqDivisionNameRule
 
 @Injectable()
 export class DivisionService implements IService {
-  constructor(
-    @InjectModel(Division.name) private DivisionModel: Model<Division>,
-  ) {}
+  constructor(@InjectModel(Division.name) private DivisionModel: Model<Division>) {}
 
   async Get(query: IdsQuery) {
     // Get one/many by ID/s
@@ -81,11 +73,7 @@ export class DivisionService implements IService {
     const errors = await uniqDivisionNameRuleCheck(this, dto.division.title);
     if (!errors) {
       // Update Division
-      await this.DivisionModel.findOneAndUpdate(
-        { _id: dto.division._id },
-        { title: dto.division.title },
-        { new: true },
-      );
+      await this.DivisionModel.findOneAndUpdate({ _id: dto.division._id }, { title: dto.division.title }, { new: true });
     }
 
     return [errors, dto];

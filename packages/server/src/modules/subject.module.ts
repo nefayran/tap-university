@@ -8,9 +8,7 @@ import { Subject, SubjectSchema } from 'src/domain/schemas/Subject';
  * Subjects example: English, Math, Science, Japanese, Geography/History
  */
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Subject.name, schema: SubjectSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Subject.name, schema: SubjectSchema }])],
   controllers: [SubjectController],
   providers: [SubjectService],
 })

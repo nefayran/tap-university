@@ -3,14 +3,7 @@
     <v-layout>
       <v-navigation-drawer class="bg-deep-gray" theme="dark" permanent>
         <v-list>
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            :title="item.title"
-            :prepend-icon="item.icon"
-            link
-            :to="item.href"
-          ></v-list-item>
+          <v-list-item v-for="item in items" :key="item.title" :title="item.title" :prepend-icon="item.icon" link :to="item.href"></v-list-item>
         </v-list>
       </v-navigation-drawer>
       <v-main>
