@@ -1,0 +1,15 @@
+{
+    "name": "tap-university",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "dev:client": "pnpm --filter ./packages/client dev",
+      "dev:server": "pnpm --filter ./packages/server dev",
+      "dev": "pnpm --stream --parallel dev",
+      "lint": "pnpm --stream --parallel lint && pnpm --stream --parallel format"
+    },
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    }
+  }
+  
