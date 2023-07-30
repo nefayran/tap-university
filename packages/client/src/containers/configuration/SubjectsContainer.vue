@@ -1,89 +1,118 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-row>
+  <v-row>
+    <v-col>
+      <v-row>
+        <v-col>
+          <v-form ref="form">
+            <h3 class="mb-3">Create new "Subject":</h3>
+            <v-row>
+              <v-col cols="3">
+                <v-text-field v-model="title" :rules="subjectService.titleRules" :counter="25" label="Subject Title" required></v-text-field>
+              </v-col>
+              <v-col cols="3">
+                <v-select
+                  label="Select Division"
+                  :items="getDivisions"
+                  item-value="_id"
+                  :rules="subjectService.divisionRules"
+                  v-model="divisionId"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col cols="2">
+                <v-btn @click="submitForm" block rounded="2" size="x-large">Create</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-col>
+      </v-row>
+      <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
+      <v-data-table :headers="headers" :items="getSubjects" class="elevation-0">
+        <template v-slot:[`item.actions`]="{ item }">
+          <v-btn
+            v-if="!item.raw.editable"
+            class="mt-5 ml-3"
+            density="comfortable"
+            @click="updateItem(item.raw)"
+            icon="mdi-pen"
+            :disabled="!!currentEditId"
+          ></v-btn>
+          <v-btn
+            v-if="item.raw.editable"
+            class="mt-5 ml-3"
+            density="comfortable"
+            @click="submitUpdate(item.raw)"
+            icon="mdi-send"
+            :disabled="!currentEditId"
+          ></v-btn>
+          <v-btn class="mt-5 ml-3" density="comfortable" @click="deleteItem(item.raw)" icon="mdi-delete" :disabled="!!currentEditId"></v-btn>
+        </template>
+        <template v-slot:[`item.title`]="{ item }">
           <v-col>
-            <v-form ref="form">
-              <v-container>
-                <h3 class="mb-3">Create new "Subject":</h3>
-                <v-row>
-                  <v-col cols="3">
-                    <v-text-field v-model="title" :rules="divisionService.titleRules" :counter="20" label="Division Title" required></v-text-field>
-                  </v-col>
-                  <v-col cols="2">
-                    <v-btn @click="submitForm" block rounded="2" size="x-large">Create</v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-form>
+            <v-row>
+              <v-text-field
+                v-model="item.raw.title"
+                variant="underlined"
+                :disabled="!item.raw.editable"
+                :rules="subjectService.titleRules"
+              ></v-text-field>
+            </v-row>
           </v-col>
-        </v-row>
-        <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
-        <v-data-table :headers="headers" :items="getDivisions" class="elevation-0">
-          <template v-slot:[`item.actions`]="{ item }">
-            <v-btn
-              v-if="!item.raw.editable"
-              class="mt-5 ml-3"
-              density="comfortable"
-              @click="updateItem(item.raw)"
-              icon="mdi-pen"
-              :disabled="currentEditTitle"
-            ></v-btn>
-            <v-btn
-              v-if="item.raw.editable"
-              class="mt-5 ml-3"
-              density="comfortable"
-              @click="submitUpdate(item.raw)"
-              icon="mdi-send"
-              :disabled="!currentEditTitle"
-            ></v-btn>
-            <v-btn class="mt-5 ml-3" density="comfortable" @click="deleteItem(item.raw)" icon="mdi-delete" :disabled="currentEditTitle"></v-btn>
-          </template>
-          <template v-slot:[`item.title`]="{ item }">
-            <v-col>
-              <v-row>
-                <v-text-field
-                  v-model="item.raw.title"
-                  variant="underlined"
-                  :disabled="!item.raw.editable"
-                  :rules="divisionService.titleRules"
-                ></v-text-field>
-              </v-row>
-            </v-col>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
-    <DeleteDialog v-model="dialogDelete" @deleteSubmit="deleteSubmit" />
-  </v-container>
+        </template>
+        <template v-slot:[`item.division`]="{ item }">
+          <v-col>
+            <v-row>
+              <v-select
+                label="Select Division"
+                :items="getDivisions"
+                item-value="_id"
+                item-title="title"
+                :rules="subjectService.divisionRules"
+                v-model="item.raw.division._id"
+                :disabled="!item.raw.editable"
+                required
+              ></v-select>
+            </v-row>
+          </v-col>
+        </template>
+      </v-data-table>
+    </v-col>
+  </v-row>
+  <DeleteDialog v-model="dialogDelete" @deleteSubmit="deleteSubmit" />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import DeleteDialog from '@/components/dialogs/DeleteDialog.vue'
-import { useDivisionsStore } from '@/store/divisions'
+import { useSubjectsStore } from '@/store/subjects'
 import { useNotificationsStore } from '@/store/notifications'
-import { DivisionService } from '@/services/DivisionService'
+import { useDivisionsStore } from '@/store/divisions'
+import { SubjectService } from '@/services/SubjectService'
+import type { IdsQuery } from '@tap/server/out/models/dtos/IdsQuery'
+import type { SubjectBasic } from '@tap/server/out/models/domain/models/Subject'
+import type { DivisionBasic } from '@tap/server/out/models/domain/models/Division'
 
-// Store:
-const store = useDivisionsStore()
+// // Store:
+const subjectsStore = useSubjectsStore()
+const divisionsStore = useDivisionsStore()
 const notificationStore = useNotificationsStore()
 
 // Services:
-const divisionService = new DivisionService(store, notificationStore)
+const subjectService = new SubjectService(subjectsStore, divisionsStore, notificationStore)
 
-// Data:
+// // Data:
 const dialogDelete = ref(false)
-const deleteDivisionArray = ref<any>([])
+const deleteSubjectArray = ref<any>([])
 const title = ref('')
+const divisionId = ref()
 const form = ref<HTMLFormElement | null>(null)
 const loading = ref(true)
-const currentEditTitle = ref<string | null>(null)
+const currentEditId = ref<string | null>(null)
+
 const headers = [
   { title: 'ID', key: '_id' },
   { title: 'Title', key: 'title' },
-  { title: 'Subjects', key: 'subjects' },
+  { title: 'Division', key: 'division' },
   { title: 'Actions', key: 'actions', sortable: false }
 ]
 
@@ -93,48 +122,51 @@ const submitForm = async () => {
     const { valid } = await form.value.validate()
     if (valid) {
       loading.value = true
-      divisionService.createDivision(title.value)
+      subjectService.Create({ title: title.value, divisionId: divisionId.value })
       loading.value = false
     }
   }
 }
 
-const deleteSubmit = async (value) => {
+const deleteSubmit = async (value: boolean) => {
   if (value) {
     loading.value = true
-    divisionService.deleteDivision(deleteDivisionArray)
+    subjectService.Delete(deleteSubjectArray)
     loading.value = false
   }
 }
 
-const submitUpdate = async (item) => {
+const submitUpdate = async (item: SubjectBasic & { editable: boolean; division: DivisionBasic }) => {
   item.editable = !item.editable
-  currentEditTitle.value = null
+  currentEditId.value = null
   if (item) {
     loading.value = true
-    console.log(item)
-    divisionService.updateDivision(item)
+    subjectService.updateSubject(item)
     loading.value = false
   }
 }
 
-const deleteItem = (item) => {
-  deleteDivisionArray.value.push(item)
+const deleteItem = (item: IdsQuery['ids']) => {
+  deleteSubjectArray.value.push(item)
   dialogDelete.value = true
 }
 
-const updateItem = (item) => {
+const updateItem = (item: SubjectBasic & { editable: boolean }) => {
   item.editable = !item.editable
-  currentEditTitle.value = item.title
+  currentEditId.value = item._id
 }
 
-// Getters:
+// // Getters:
 const getDivisions = computed(() => {
-  return store.getDivisions
+  return divisionsStore.getDivisions
+})
+
+const getSubjects = computed(() => {
+  return subjectsStore.getSubjects
 })
 
 onMounted(() => {
-  divisionService.fetchDivision([])
+  subjectService.Load([])
   loading.value = false
 })
 </script>

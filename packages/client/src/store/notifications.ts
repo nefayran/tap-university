@@ -5,6 +5,11 @@ export interface INotification {
   type: 'success' | 'warning' | 'info' | 'warning' | 'error'
 }
 
+export interface NotificationStoreType {
+  pushNotification(payload: INotification): void
+  getNotifications(): Array<INotification>
+}
+
 export const useNotificationsStore = defineStore('Notifications', {
   state: () => ({
     notifications: [] as Array<INotification>

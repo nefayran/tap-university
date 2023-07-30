@@ -1,12 +1,12 @@
 <template>
-  <DashboardLayout title="Configuration" icon="mdi-react">
-    <ConfigurationDashboardContainer />
+  <DashboardLayout title="Examines" icon="mdi-react">
+    <ExaminesDashboardContainer />
   </DashboardLayout>
 </template>
 
 <script lang="ts" setup>
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
-import ConfigurationDashboardContainer from '@/containers/ConfigurationDashboardContainer.vue'
+import ExaminesDashboardContainer from '@/containers/ExaminesDashboardContainer.vue'
 /**
  * For future meta data possibilities.
  */

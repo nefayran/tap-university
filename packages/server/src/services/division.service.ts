@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateDivisionDto } from 'src/dtos/CreateDivisionDto';
-import { IdsQuery } from 'src/dtos/GetDivisionQuery';
+import { IdsQuery } from 'src/dtos/IdsQuery';
 import IService from 'src/interfaces/IServiceBasic';
 import { Division } from 'src/domain/schemas/Division';
 import { UpdateDivisionDto } from 'src/dtos/UpdateDivisionDto';

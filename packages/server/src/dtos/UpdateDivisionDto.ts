@@ -1,6 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { DivisionBasic } from 'src/models';
 
-export class UpdateDivisionDto {
-  @ApiProperty()
-  division: { _id: string; title: string };
+export interface UpdateDivisionDto {
+  division: DivisionBasic;
 }

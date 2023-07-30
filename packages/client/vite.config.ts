@@ -17,6 +17,9 @@ export default defineConfig({
       autoImport: true,
     }),
   ],
+  optimizeDeps: {
+    include: ['tap/server'],
+  },
   define: { 'process.env': {} },
   resolve: {
     alias: {

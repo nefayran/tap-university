@@ -1,9 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { SubjectBasic } from 'src/domain/models/Subject';
 
-export class CreateSubjectDto {
-  @ApiProperty()
-  title: string;
-
-  @ApiProperty()
-  divisionType: string;
+export interface CreateSubjectDto {
+  subjects: SubjectBasic[];
 }

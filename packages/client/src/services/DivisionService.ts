@@ -1,9 +1,16 @@
+import { type IdsQuery } from '@tap/server/out/models/dtos/IdsQuery'
+import { type DivisionStoreType } from '@/store/divisions'
+import type { NotificationStoreType } from '@/store/notifications'
+import type { UpdateDivisionDto } from '@tap/server/out/models/dtos/UpdateDivisionDto'
+import type { Store } from 'pinia'
+import type { DivisionBasic } from '@tap/server/out/models/domain/models/Division'
+
 /**
  * Division service layer for business logic implementation and stores aggregation.
  */
 export class DivisionService {
-  divisionStore: any
-  notificationStore: any
+  divisionStore: DivisionStoreType
+  notificationStore: NotificationStoreType
 
   titleRules = [
     (value: string) => {
@@ -18,12 +25,12 @@ export class DivisionService {
     }
   ]
 
-  constructor(_divisionStore: any, _notificationStore: any) {
-    this.divisionStore = _divisionStore
-    this.notificationStore = _notificationStore
+  constructor(_divisionStore: Store, _notificationStore: Store) {
+    this.divisionStore = _divisionStore as unknown as DivisionStoreType
+    this.notificationStore = _notificationStore as unknown as NotificationStoreType
   }
 
-  async createDivision(title: string) {
+  async Create(title: string) {
     const [error, data] = await this.divisionStore.createDivision([{ title: title }])
     if (data && data.response && data.response.errorCode) {
       this.notificationStore.pushNotification({ text: `Warning: ${data.response.message}`, type: 'warning' })
@@ -34,23 +41,23 @@ export class DivisionService {
       return null
     }
     this.notificationStore.pushNotification({ text: 'Division successfully created', type: 'success' })
-    this.fetchDivision([])
+    this.Load([])
   }
 
-  async deleteDivision(deleteDivisionArray: any) {
-    const [error] = await this.divisionStore.deleteDivision(deleteDivisionArray.value)
-    deleteDivisionArray.value = []
+  async Delete(deleteDivisionArray: IdsQuery['ids']) {
+    const [error] = await this.divisionStore.deleteDivision(deleteDivisionArray)
+    deleteDivisionArray = []
     if (error) {
       this.notificationStore.pushNotification({ text: `Error: ${error}`, type: 'error' })
       return null
     }
     this.notificationStore.pushNotification({ text: 'Division successfully deleted', type: 'success' })
-    this.fetchDivision([])
+    this.Load([])
   }
 
-  async fetchDivision(ids: []) {
+  async Load(ids: []) {
     const [error, response] = await this.divisionStore.fetchDivision(ids)
-    const result = response.map((obj: any) => ({ ...obj, editable: false }))
+    const result = response.map((obj: DivisionBasic) => ({ ...obj, editable: false }))
     this.divisionStore.Divisions = result
     if (error) {
       this.notificationStore.pushNotification({ text: `Error: ${error}`, type: 'error' })
@@ -59,11 +66,11 @@ export class DivisionService {
     this.notificationStore.pushNotification({ text: 'Divisions successfully loaded', type: 'info' })
   }
 
-  async updateDivision(division: {}) {
+  async Update(division: UpdateDivisionDto['division']) {
     const [error, data] = await this.divisionStore.updateDivision(division)
     if (data && data.response && data.response.errorCode) {
       this.notificationStore.pushNotification({ text: `Warning: ${data.response.message}`, type: 'warning' })
-      this.fetchDivision([])
+      this.Load([])
       return null
     }
     if (error) {
@@ -71,6 +78,6 @@ export class DivisionService {
       return null
     }
     this.notificationStore.pushNotification({ text: 'Divisions successfully updated', type: 'success' })
-    this.fetchDivision([])
+    this.Load([])
   }
 }

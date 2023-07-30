@@ -9,7 +9,7 @@ export class Subject {
   title: string;
 
   @Prop()
-  divisionType: string;
+  divisionId: string;
 }
 
 export const SubjectSchema = SchemaFactory.createForClass(Subject);

@@ -1,16 +1,13 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, UnprocessableEntityException } from '@nestjs/common';
 import { DivisionService } from '../services/Division.service';
-// import { Division } from 'src/domain/schemas/Division';
 import { CreateDivisionDto } from 'src/dtos/CreateDivisionDto';
-import { IdsQuery } from 'src/dtos/GetDivisionQuery';
+import { IdsQuery } from 'src/dtos/IdsQuery';
 import IControllerBasic from 'src/interfaces/IControllerBasic';
 import { UpdateDivisionDto } from 'src/dtos/UpdateDivisionDto';
 
 @Controller('division')
 export class DivisionController implements IControllerBasic {
   constructor(private readonly DivisionService: DivisionService) {}
-  update: (payload: any) => Promise<any>;
-
   @Get()
   async get(@Query() query: IdsQuery) {
     return this.DivisionService.Get(query);
@@ -37,7 +34,7 @@ export class DivisionController implements IControllerBasic {
   }
 
   @Put()
-  async put(@Body() updateDivisionDto: UpdateDivisionDto) {
+  async update(@Body() updateDivisionDto: UpdateDivisionDto) {
     try {
       const [errors] = await this.DivisionService.Update(updateDivisionDto);
       if (errors) {

@@ -6,10 +6,12 @@
       "dev:client": "pnpm --filter ./packages/client dev",
       "dev:server": "pnpm --filter ./packages/server dev",
       "dev": "pnpm --stream --parallel dev",
+      "build:models": "pnpm --filter ./packages/server build:models",
       "lint": "pnpm --stream --parallel lint && pnpm --stream --parallel format"
     },
     "devDependencies": {
-        "typescript": "^4.7.4"
+        "typescript": "^4.7.4",
+        "rimraf": "latest"
     }
   }
   

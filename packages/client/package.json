@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@tap/client",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tap/server": "^0.0.1",
     "@mdi/font": "7.0.96",
     "roboto-fontface": "*",
     "pinia": "^2.1.4",

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "declaration": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "target": "ES2015",
+      "outDir": "./out/models",
+      "baseUrl": "./",
+      "moduleResolution":"node",
+      "strictPropertyInitialization": false,
+      "experimentalDecorators": true,
+    },
+    "include": [
+        "./src/models.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "dist",
+        "coverage"
+    ]
+  }
+  

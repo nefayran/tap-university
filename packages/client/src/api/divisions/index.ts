@@ -1,16 +1,18 @@
 import { axiosInstance, type APIResponse } from '..'
+import { type CreateDivisionDto } from '@tap/server/out/models/dtos/CreateDivisionDto'
+import { type IdsQuery } from '@tap/server/out/models/dtos/IdsQuery'
+import { type UpdateDivisionDto } from '@tap/server/out/models/dtos/UpdateDivisionDto'
 
 /**
  * Create new divisions
  * @param divisions divisions array
  * @returns
  */
-export async function postDivision(divisions: []): Promise<APIResponse> {
+export async function postDivision(divisions: CreateDivisionDto['divisions']): Promise<APIResponse> {
   try {
-    // TODO: Remove any
-    const { data } = await axiosInstance.post<any>(`division`, {
+    const { data } = await axiosInstance.post(`division`, {
       divisions
-    })
+    } as CreateDivisionDto)
     return [null, data]
   } catch (error) {
     console.error(error)
@@ -23,11 +25,10 @@ export async function postDivision(divisions: []): Promise<APIResponse> {
  * @param ids empty array - return all
  * @returns
  */
-export async function getDivision(ids: []): Promise<APIResponse> {
-  const params = { ids }
+export async function getDivision(ids: IdsQuery['ids']): Promise<APIResponse> {
+  const params: IdsQuery = { ids }
   try {
-    // TODO: Remove any
-    const { data } = await axiosInstance.get<any>(`division`, { params })
+    const { data } = await axiosInstance.get(`division`, { params })
     return [null, data]
   } catch (error) {
     console.error(error)
@@ -40,11 +41,10 @@ export async function getDivision(ids: []): Promise<APIResponse> {
  * @param ids
  * @returns
  */
-export async function deleteDivision(ids: []): Promise<APIResponse> {
-  const params = { ids }
+export async function deleteDivision(ids: IdsQuery['ids']): Promise<APIResponse> {
+  const params: IdsQuery = { ids }
   try {
-    // TODO: Remove any
-    const { data } = await axiosInstance.delete<any>(`division`, { params })
+    const { data } = await axiosInstance.delete(`division`, { params })
     return [null, data]
   } catch (error) {
     console.error(error)
@@ -57,10 +57,9 @@ export async function deleteDivision(ids: []): Promise<APIResponse> {
  * @param ids
  * @returns
  */
-export async function putDivision(division: {}): Promise<APIResponse> {
+export async function putDivision(division: UpdateDivisionDto['division']): Promise<APIResponse> {
   try {
-    // TODO: Remove any
-    const { data } = await axiosInstance.put<any>(`division`, { division })
+    const { data } = await axiosInstance.put(`division`, { division } as UpdateDivisionDto)
     return [null, data]
   } catch (error) {
     console.error(error)
