@@ -1,17 +1,22 @@
 {
-    "name": "tap-university",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-      "dev:client": "pnpm --filter ./packages/client dev",
-      "dev:server": "pnpm --filter ./packages/server dev",
-      "dev": "pnpm build:models && pnpm --stream --parallel dev",
-      "build:models": "pnpm --filter ./packages/server build:models",
-      "lint": "pnpm --stream --parallel lint && pnpm --stream --parallel format"
-    },
-    "devDependencies": {
-        "typescript": "^4.7.4",
-        "rimraf": "latest"
-    }
+  "name": "tap-university",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:client": "pnpm --filter ./packages/client dev",
+    "dev:server": "pnpm --filter ./packages/server dev",
+    "dev": "pnpm build:models && pnpm --stream --parallel dev",
+    "test:unit": "pnpm --stream --parallel test:unit",
+    "build:models": "pnpm --filter ./packages/server build:models",
+    "build:client": "pnpm --filter ./packages/client build",
+    "build:server": "pnpm --filter ./packages/server build",
+    "lint": "pnpm --stream --parallel lint && pnpm --stream --parallel format"
+  },
+  "devDependencies": {
+    "rimraf": "latest",
+    "typescript": "4.7.4"
+  },
+  "dependencies": {
+    "jest": "29.3.1"
   }
-  
+}

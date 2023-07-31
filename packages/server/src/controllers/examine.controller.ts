@@ -2,7 +2,7 @@ import { Body, Controller, Post, UnprocessableEntityException } from '@nestjs/co
 import { ApiTags } from '@nestjs/swagger';
 import { CalculateExamineDto } from 'src/dtos/CalculateExamineDto';
 import IControllerBasic from 'src/interfaces/IControllerBasic';
-import { ExamineService } from 'src/services/Examine.service';
+import { ExamineService } from 'src/services/examine.service';
 
 @Controller('Examine')
 @ApiTags('Examine Controller')

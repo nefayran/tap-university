@@ -2,7 +2,7 @@
   <slot></slot>
   <div class="notification-container">
     <v-slide-y-transition group>
-      <v-alert class="mt-2" dense v-for="notification in getNotifications" v-bind:key="notification" :type="notification.type" dismissible dark>
+      <v-alert class="mt-2" dense v-for="(notification, index) in getNotifications" v-bind:key="index" :type="notification.type" dismissible dark>
         {{ notification.text }}
       </v-alert>
     </v-slide-y-transition>
@@ -20,8 +20,8 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ComputedRef } from 'vue'
-import { useNotificationsStore, INotification } from '@/store/notifications'
+import { computed, type ComputedRef } from 'vue'
+import { useNotificationsStore, type INotification } from '@/store/notifications'
 
 // Store:
 const store = useNotificationsStore()

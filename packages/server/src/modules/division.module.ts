@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { DivisionController } from '../controllers/Division.controller';
-import { DivisionService } from '../services/Division.service';
+import { DivisionController } from '../controllers/division.controller';
+import { DivisionService } from '../services/division.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Division, DivisionSchema } from 'src/domain/schemas/Division';
 /**

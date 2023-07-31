@@ -1,4 +1,4 @@
-import { ConditionService } from 'src/services/Condition.service';
+import { ConditionService } from 'src/services/condition.service';
 import { ConditionBasic } from '../models/Condition';
 
 export const uniqConditionNameRuleCheck = async (service: ConditionService, condition: ConditionBasic) => {

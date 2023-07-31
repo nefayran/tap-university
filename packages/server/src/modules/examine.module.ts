@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ExamineController } from '../controllers/Examine.controller';
-import { ExamineService } from '../services/Examine.service';
+import { ExamineController } from '../controllers/examine.controller';
+import { ExamineService } from '../services/examine.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Examine, ExamineSchema } from 'src/domain/schemas/Examine';
 import { Division, DivisionSchema } from 'src/domain/schemas/Division';

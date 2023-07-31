@@ -1,4 +1,4 @@
-import { DivisionService } from 'src/services/Division.service';
+import { DivisionService } from 'src/services/division.service';
 import { DivisionBasic } from '../models/Division';
 
 export const uniqDivisionNameRuleCheck = async (service: DivisionService, division: DivisionBasic) => {

@@ -30,7 +30,6 @@ export class ExamineService implements IService {
     for (const key of Object.keys(examine)) {
       const column = examine[key];
       if (mongoose.Types.ObjectId.isValid(key)) {
-        // const keys = [key.toString()];
         const subject = await this.SubjectModel.findById(key);
         if (subject) {
           subjects.push({ _id: subject._id, division: { _id: subject.divisionId }, score: Number(column) });
@@ -103,10 +102,10 @@ export class ExamineService implements IService {
 
         examine.result = finalResult ? 'Pass' : 'Fail';
       }
-      const errors = [];
-      return [errors, dto];
-    } catch (err) {
-      return err;
+
+      return [null, dto];
+    } catch (errors) {
+      return [errors];
     }
   }
 }

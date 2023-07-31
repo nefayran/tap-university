@@ -1,4 +1,4 @@
-import { SubjectService } from 'src/services/Subject.service';
+import { SubjectService } from 'src/services/subject.service';
 import { SubjectBasic } from '../models/Subject';
 
 export const uniqSubjectNameRuleCheck = async (service: SubjectService, subject: SubjectBasic) => {

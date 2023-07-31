@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, UnprocessableEntityException } from '@nestjs/common';
-import { DivisionService } from '../services/Division.service';
+import { DivisionService } from '../services/division.service';
 import { CreateDivisionDto } from 'src/dtos/CreateDivisionDto';
 import { IdsQuery } from 'src/dtos/IdsQuery';
 import IControllerBasic from 'src/interfaces/IControllerBasic';

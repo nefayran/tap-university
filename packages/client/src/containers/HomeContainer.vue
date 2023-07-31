@@ -25,7 +25,6 @@
         <v-list-item> <b>Backend:</b> NestJS, Swagger, CORS, Mongoose </v-list-item>
         <v-list-item> <b>Database:</b> MongoDB </v-list-item>
         <v-list-item> <b>Docker:</b> Docker, Docker compose </v-list-item>
-        <v-list-item> <b>Testing:</b> Unit, E2E tests </v-list-item>
       </v-list>
       <h2>Possible improvements:</h2>
       <v-list>
@@ -35,7 +34,7 @@
         <v-list-item> <b>Translations:</b> Add i18 and translations </v-list-item>
         <v-list-item> <b>Security:</b> Add auth and https support </v-list-item>
         <v-list-item> <b>Save examines:</b> Add save button to examines and add dashboard to view/delete saved examines tables </v-list-item>
-        <v-list-item> <b>Testing:</b> Unit, E2E tests </v-list-item>
+        <v-list-item> <b>Testing:</b> Add Unit, E2E tests (I just save my time but it possible)</v-list-item>
       </v-list>
     </v-card-text>
   </v-card>

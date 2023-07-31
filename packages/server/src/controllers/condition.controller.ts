@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { IdsQuery } from 'src/dtos/IdsQuery';
 import IControllerBasic from 'src/interfaces/IControllerBasic';
 import { CreateConditionDto, UpdateConditionDto } from 'src/models';
-import { ConditionService } from 'src/services/Condition.service';
+import { ConditionService } from 'src/services/condition.service';
 
 @Controller('condition')
 @ApiTags('Condition Controller')

@@ -1,0 +1,25 @@
+FROM node:18.16 as build
+WORKDIR /app
+
+
+COPY nginx.conf nginx.conf
+COPY pnpm-workspace.yaml pnpm-workspace.yaml
+COPY package.json package.json
+COPY .npmrc .npmrc
+COPY ./packages/client ./packages/client
+COPY ./packages/server ./packages/server
+
+RUN npm install -g pnpm
+RUN pnpm install
+RUN pnpm run build:models
+RUN pnpm run build:client
+
+FROM nginx:alpine
+
+COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/packages/client/dist /usr/share/nginx/html
+EXPOSE 5173
+CMD ["nginx", "-g", "daemon off;"]
+
+
+

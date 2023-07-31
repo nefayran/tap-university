@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConditionController } from '../controllers/Condition.controller';
-import { ConditionService } from '../services/Condition.service';
+import { ConditionController } from '../controllers/condition.controller';
+import { ConditionService } from '../services/condition.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Condition, ConditionSchema } from 'src/domain/schemas/Condition';
 import { Division, DivisionSchema } from 'src/domain/schemas/Division';

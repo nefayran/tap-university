@@ -17,7 +17,7 @@ export interface ConditionStoreType {
   createCondition(payload: CreateConditionDto['conditions']): Promise<APIResponse>
   deleteCondition(payload: IdsQuery['ids']): Promise<APIResponse>
   fetchCondition(payload: IdsQuery['ids']): Promise<APIResponse>
-  updateCondition(payload: UpdateConditionDto['Condition']): Promise<APIResponse>
+  updateCondition(payload: UpdateConditionDto['condition']): Promise<APIResponse>
 }
 
 export const useConditionsStore = defineStore('Condition', {
