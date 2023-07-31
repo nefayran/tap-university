@@ -16,6 +16,15 @@ For the entrance examination of Tap University, which emphasizes comprehensive a
 - Separate layers for backend application: controllers, services (repositories are redundant in this case)
 - Domain focus solution, domain models and business rules contains in backend "domain" layer
 - Monorepo solution with using pnpm-workpsaces and shared models backend to frontend
+## Possible improvements
+      
+        
+- Conditions: Add more condition types, add more tables to cover all cases with different conditions (SUM BY SUBJECT etc.)
+- Translations: Add i18 and translations 
+- Security: Add auth and https support 
+- Save examines: Add save button to examines and add dashboard to view/delete saved examines tables 
+- Testing: Add Unit, E2E tests (I just save my time but it possible)
+      
 ## Tech Stack
       
 - Frontend: VueJS 3, Vuetify 3, Pinia 
