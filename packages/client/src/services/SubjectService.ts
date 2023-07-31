@@ -12,6 +12,13 @@ export class SubjectService {
   divisionStore: DivisionStoreType
   notificationStore: NotificationStoreType
 
+  headers = [
+    { title: 'ID', key: '_id', width: '10%' },
+    { title: 'Title', key: 'title' },
+    { title: 'Division', key: 'division' },
+    { title: 'Actions', key: 'actions', sortable: false }
+  ]
+
   titleRules = [
     (value: string) => {
       if (value) return true
@@ -40,7 +47,7 @@ export class SubjectService {
   }
 
   async Create(payload: { title: string; divisionId: DivisionBasic['_id'] }) {
-    const [error, data] = await this.subjectStore.createSubject([{ title: payload.title, division: { _id: payload.divisionId} }])
+    const [error, data] = await this.subjectStore.createSubject([{ title: payload.title, division: { _id: payload.divisionId } }])
     if (data && data.response && data.response.errorCode) {
       this.notificationStore.pushNotification({ text: `Warning: ${data.response.message}`, type: 'warning' })
       return null
@@ -75,7 +82,7 @@ export class SubjectService {
     this.notificationStore.pushNotification({ text: 'Subjects successfully loaded', type: 'info' })
   }
 
-  async updateSubject(subject: {}) {
+  async Update(subject: {}) {
     const [error, data] = await this.subjectStore.updateSubject(subject)
     if (data && data.response && data.response.errorCode) {
       this.notificationStore.pushNotification({ text: `Warning: ${data.response.message}`, type: 'warning' })

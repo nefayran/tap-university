@@ -1,3 +1,3 @@
 export class EntityBasic {
-  _id: string;
+  _id: string | number;
 }

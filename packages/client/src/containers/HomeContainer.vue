@@ -27,6 +27,16 @@
         <v-list-item> <b>Docker:</b> Docker, Docker compose </v-list-item>
         <v-list-item> <b>Testing:</b> Unit, E2E tests </v-list-item>
       </v-list>
+      <h2>Possible improvements:</h2>
+      <v-list>
+        <v-list-item>
+          <b>Conditions:</b> Add more condition types, add more tables to cover all cases with different conditions (SUM BY SUBJECT etc.)</v-list-item
+        >
+        <v-list-item> <b>Translations:</b> Add i18 and translations </v-list-item>
+        <v-list-item> <b>Security:</b> Add auth and https support </v-list-item>
+        <v-list-item> <b>Save examines:</b> Add save button to examines and add dashboard to view/delete saved examines tables </v-list-item>
+        <v-list-item> <b>Testing:</b> Unit, E2E tests </v-list-item>
+      </v-list>
     </v-card-text>
   </v-card>
 </template>

@@ -4,8 +4,10 @@ import { CreateDivisionDto } from 'src/dtos/CreateDivisionDto';
 import { IdsQuery } from 'src/dtos/IdsQuery';
 import IControllerBasic from 'src/interfaces/IControllerBasic';
 import { UpdateDivisionDto } from 'src/dtos/UpdateDivisionDto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('division')
+@ApiTags('Division Controller')
 export class DivisionController implements IControllerBasic {
   constructor(private readonly DivisionService: DivisionService) {}
   @Get()

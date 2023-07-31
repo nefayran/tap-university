@@ -1,10 +1,19 @@
 import { DivisionService } from 'src/services/Division.service';
+import { DivisionBasic } from '../models/Division';
 
-export const uniqDivisionNameRuleCheck = async (service: DivisionService, title: string) => {
-  const division = await service.GetByTitle(title);
-  if (division?.length > 0) {
-    console.log('Division already exists!');
-    return `Division with title: ${title} already exists!`;
+export const uniqDivisionNameRuleCheck = async (service: DivisionService, division: DivisionBasic) => {
+  try {
+    const existingDivision = await service.GetByTitle(division.title);
+
+    if (existingDivision && existingDivision._id == division._id && existingDivision.title === division.title) {
+      return null;
+    }
+
+    if (existingDivision) {
+      return `Division with title: ${existingDivision.title} already exists!`;
+    }
+    return null;
+  } catch (e) {
+    return e;
   }
-  return null;
 };

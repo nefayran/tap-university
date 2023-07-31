@@ -12,7 +12,7 @@
               <v-col cols="3">
                 <v-select
                   label="Select Division"
-                  :items="getDivisions"
+                  :items="divisionsStore.getDivisions"
                   item-value="_id"
                   :rules="subjectService.divisionRules"
                   v-model="divisionId"
@@ -27,7 +27,7 @@
         </v-col>
       </v-row>
       <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
-      <v-data-table :headers="headers" :items="getSubjects" class="elevation-0">
+      <v-data-table v-if="!loading" :headers="subjectService.headers" :items="subjectsStore.getSubjects" class="elevation-0">
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
             v-if="!item.raw.editable"
@@ -64,7 +64,7 @@
             <v-row>
               <v-select
                 label="Select Division"
-                :items="getDivisions"
+                :items="divisionsStore.getDivisions"
                 item-value="_id"
                 item-title="title"
                 :rules="subjectService.divisionRules"
@@ -82,7 +82,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import DeleteDialog from '@/components/dialogs/DeleteDialog.vue'
 import { useSubjectsStore } from '@/store/subjects'
 import { useNotificationsStore } from '@/store/notifications'
@@ -92,7 +92,7 @@ import type { IdsQuery } from '@tap/server/out/models/dtos/IdsQuery'
 import type { SubjectBasic } from '@tap/server/out/models/domain/models/Subject'
 import type { DivisionBasic } from '@tap/server/out/models/domain/models/Division'
 
-// // Store:
+// Store:
 const subjectsStore = useSubjectsStore()
 const divisionsStore = useDivisionsStore()
 const notificationStore = useNotificationsStore()
@@ -100,7 +100,7 @@ const notificationStore = useNotificationsStore()
 // Services:
 const subjectService = new SubjectService(subjectsStore, divisionsStore, notificationStore)
 
-// // Data:
+// Data:
 const dialogDelete = ref(false)
 const deleteSubjectArray = ref<any>([])
 const title = ref('')
@@ -108,13 +108,6 @@ const divisionId = ref()
 const form = ref<HTMLFormElement | null>(null)
 const loading = ref(true)
 const currentEditId = ref<string | null>(null)
-
-const headers = [
-  { title: 'ID', key: '_id' },
-  { title: 'Title', key: 'title' },
-  { title: 'Division', key: 'division' },
-  { title: 'Actions', key: 'actions', sortable: false }
-]
 
 // Methods:
 const submitForm = async () => {
@@ -141,7 +134,7 @@ const submitUpdate = async (item: SubjectBasic & { editable: boolean; division: 
   currentEditId.value = null
   if (item) {
     loading.value = true
-    subjectService.updateSubject(item)
+    subjectService.Update(item)
     loading.value = false
   }
 }
@@ -155,15 +148,6 @@ const updateItem = (item: SubjectBasic & { editable: boolean }) => {
   item.editable = !item.editable
   currentEditId.value = item._id
 }
-
-// // Getters:
-const getDivisions = computed(() => {
-  return divisionsStore.getDivisions
-})
-
-const getSubjects = computed(() => {
-  return subjectsStore.getSubjects
-})
 
 onMounted(() => {
   subjectService.Load([])

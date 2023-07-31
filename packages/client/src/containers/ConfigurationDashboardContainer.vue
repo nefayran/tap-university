@@ -16,7 +16,9 @@
           <SubjectsContainer />
         </v-window-item>
 
-        <v-window-item value="three"> Three </v-window-item>
+        <v-window-item value="three">
+          <ConditionsContainer />
+        </v-window-item>
       </v-window>
     </v-card-text>
   </v-card>
@@ -26,6 +28,7 @@
 import { ref } from 'vue'
 import DivisionsContainer from './configuration/DivisionsContainer.vue'
 import SubjectsContainer from './configuration/SubjectsContainer.vue'
+import ConditionsContainer from './configuration/ConditionsContainer.vue'
 
 const tab = ref(0)
 </script>

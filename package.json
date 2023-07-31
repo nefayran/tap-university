@@ -5,7 +5,7 @@
     "scripts": {
       "dev:client": "pnpm --filter ./packages/client dev",
       "dev:server": "pnpm --filter ./packages/server dev",
-      "dev": "pnpm --stream --parallel dev",
+      "dev": "pnpm build:models && pnpm --stream --parallel dev",
       "build:models": "pnpm --filter ./packages/server build:models",
       "lint": "pnpm --stream --parallel lint && pnpm --stream --parallel format"
     },

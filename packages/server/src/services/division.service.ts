@@ -28,11 +28,11 @@ export class DivisionService implements IService {
   async GetByTitle(title: string) {
     // Get one/many by title
     if (title.length > 0) {
-      const result = await this.DivisionModel.find({ title: title });
-      return result as [];
+      const result = await this.DivisionModel.findOne({ title: title });
+      return result;
     }
 
-    return [];
+    return null;
   }
 
   async Create(dto: CreateDivisionDto) {
@@ -40,7 +40,7 @@ export class DivisionService implements IService {
       const errors = [];
       if (dto.divisions?.length > 0) {
         for (const division of dto.divisions) {
-          const error = await uniqDivisionNameRuleCheck(this, division.title);
+          const error = await uniqDivisionNameRuleCheck(this, division);
           error && errors.push(error);
           if (errors.length === 0) {
             // Create new division
@@ -70,10 +70,10 @@ export class DivisionService implements IService {
   }
 
   async Update(dto: UpdateDivisionDto) {
-    const errors = await uniqDivisionNameRuleCheck(this, dto.division.title);
+    const errors = await uniqDivisionNameRuleCheck(this, dto.division);
     if (!errors) {
       // Update Division
-      await this.DivisionModel.findOneAndUpdate({ _id: dto.division._id }, { title: dto.division.title }, { new: true });
+      await this.DivisionModel.findOneAndUpdate({ _id: dto.division._id }, { title: dto.division.title, available: dto.division.available });
     }
 
     return [errors, dto];

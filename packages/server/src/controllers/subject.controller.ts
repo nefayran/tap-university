@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, UnprocessableEntityException } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UpdateSubjectDto } from 'out/models/dtos/UpdateSubjectDto';
 import { CreateSubjectDto } from 'src/dtos/CreateSubjectDto';
 import { IdsQuery } from 'src/dtos/IdsQuery';
@@ -6,6 +7,7 @@ import IControllerBasic from 'src/interfaces/IControllerBasic';
 import { SubjectService } from 'src/services/subject.service';
 
 @Controller('subject')
+@ApiTags('Subject Controller')
 export class SubjectController implements IControllerBasic {
   constructor(private readonly SubjectService: SubjectService) {}
 

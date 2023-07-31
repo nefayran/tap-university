@@ -7,7 +7,16 @@
             <h3 class="mb-3">Create new "Division":</h3>
             <v-row>
               <v-col cols="3">
-                <v-text-field v-model="title" :rules="divisionService.titleRules" :counter="20" label="Division Title" required></v-text-field>
+                <v-text-field
+                  v-model="division.title"
+                  :rules="divisionService.titleRules"
+                  :counter="20"
+                  label="Division Title"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="1">
+                <v-checkbox v-model="division.available" label="Available"></v-checkbox>
               </v-col>
               <v-col cols="2">
                 <v-btn @click="submitForm" block rounded="2" size="x-large">Create</v-btn>
@@ -17,7 +26,7 @@
         </v-col>
       </v-row>
       <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
-      <v-data-table :headers="headers" :items="getDivisions" class="elevation-0">
+      <v-data-table v-if="!loading" :headers="divisionService.headers" :items="divisionsStore.getDivisions" class="elevation-0">
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
             v-if="!item.raw.editable"
@@ -49,6 +58,13 @@
             </v-row>
           </v-col>
         </template>
+        <template v-slot:[`item.available`]="{ item }">
+          <v-col>
+            <v-row>
+              <v-checkbox v-model="item.raw.available" :disabled="!item.raw.editable" label="Available"></v-checkbox>
+            </v-row>
+          </v-col>
+        </template>
       </v-data-table>
     </v-col>
   </v-row>
@@ -56,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import DeleteDialog from '@/components/dialogs/DeleteDialog.vue'
 import { useDivisionsStore } from '@/store/divisions'
 import { useNotificationsStore } from '@/store/notifications'
@@ -65,25 +81,19 @@ import type { IdsQuery } from '@tap/server/out/models/dtos/IdsQuery'
 import type { DivisionBasic } from '@tap/server/out/models/domain/models/Division'
 
 // Store:
-const store = useDivisionsStore()
+const divisionsStore = useDivisionsStore()
 const notificationStore = useNotificationsStore()
 
 // Services:
-const divisionService = new DivisionService(store, notificationStore)
+const divisionService = new DivisionService(divisionsStore, notificationStore)
 
 // Data:
 const dialogDelete = ref(false)
 const deleteDivisionArray = ref<IdsQuery['ids']>([])
-const title = ref('')
+const division = ref({ title: null, available: true })
 const form = ref<HTMLFormElement | null>(null)
 const loading = ref(true)
 const currentEditTitle = ref<string | null>(null)
-const headers = [
-  { title: 'ID', key: '_id' },
-  { title: 'Title', key: 'title' },
-  { title: 'Subjects', key: 'subjects' },
-  { title: 'Actions', key: 'actions', sortable: false }
-]
 
 // Methods:
 const submitForm = async () => {
@@ -91,7 +101,7 @@ const submitForm = async () => {
     const { valid } = await form.value.validate()
     if (valid) {
       loading.value = true
-      divisionService.Create(title.value)
+      divisionService.Create(division.value as unknown as DivisionBasic)
       loading.value = false
     }
   }
@@ -110,7 +120,6 @@ const submitUpdate = async (item: DivisionBasic & { editable: boolean }) => {
   currentEditTitle.value = null
   if (item) {
     loading.value = true
-    console.log(item)
     divisionService.Update(item)
     loading.value = false
   }
@@ -126,13 +135,8 @@ const updateItem = (item: DivisionBasic & { editable: boolean }) => {
   currentEditTitle.value = item.title
 }
 
-// Getters:
-const getDivisions = computed(() => {
-  return store.getDivisions
-})
-
-onMounted(() => {
-  divisionService.Load([])
+onMounted(async () => {
+  await divisionService.Load([])
   loading.value = false
 })
 </script>

@@ -12,6 +12,13 @@ export class DivisionService {
   divisionStore: DivisionStoreType
   notificationStore: NotificationStoreType
 
+  headers = [
+    { title: 'ID', key: '_id', width: '10%' },
+    { title: 'Title', key: 'title' },
+    { title: 'Available', key: 'available' },
+    { title: 'Actions', key: 'actions', sortable: false }
+  ]
+
   titleRules = [
     (value: string) => {
       if (value) return true
@@ -30,8 +37,8 @@ export class DivisionService {
     this.notificationStore = _notificationStore as unknown as NotificationStoreType
   }
 
-  async Create(title: string) {
-    const [error, data] = await this.divisionStore.createDivision([{ title: title }])
+  async Create(division: DivisionBasic) {
+    const [error, data] = await this.divisionStore.createDivision([division])
     if (data && data.response && data.response.errorCode) {
       this.notificationStore.pushNotification({ text: `Warning: ${data.response.message}`, type: 'warning' })
       return null

@@ -8,6 +8,9 @@ export type DivisionDocument = HydratedDocument<Division>;
 export class Division extends DivisionBasic {
   @Prop()
   title: string;
+
+  @Prop()
+  available: boolean;
 }
 
 export const DivisionSchema = SchemaFactory.createForClass(Division);
