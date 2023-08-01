@@ -4,13 +4,13 @@ import { DivisionModule } from './modules/division.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConditionModule } from './modules/condition.module';
 import { ExamineModule } from './modules/examine.module';
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

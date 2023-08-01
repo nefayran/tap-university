@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
+      <v-progress-linear v-if="loading" indeterminate color="cyan"></v-progress-linear>
       <v-data-table v-if="!loading" :headers="examineService.headers" :items="getExamines" class="elevation-0">
         <template v-slot:item="{ item }">
           <tr>

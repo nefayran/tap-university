@@ -3,7 +3,7 @@
     <v-col>
       <v-row>
         <v-col>
-          <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
+          <v-progress-linear v-if="loading" indeterminate color="cyan"></v-progress-linear>
           <v-form ref="form" v-if="!loading">
             <h3 class="mb-3">Create new "Condition":</h3>
             <v-row>
@@ -59,7 +59,7 @@
           </v-form>
         </v-col>
       </v-row>
-      <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
+      <v-progress-linear v-if="loading" indeterminate color="cyan"></v-progress-linear>
       <v-data-table v-if="!loading" :headers="conditionService.headers" :items="conditionsStore.getConditions" class="elevation-0">
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn

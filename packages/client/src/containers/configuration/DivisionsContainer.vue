@@ -25,7 +25,7 @@
           </v-form>
         </v-col>
       </v-row>
-      <v-skeleton-loader v-if="loading" max-width="100%" min-height="100" type="table"></v-skeleton-loader>
+      <v-progress-linear v-if="loading" indeterminate color="cyan"></v-progress-linear>
       <v-data-table v-if="!loading" :headers="divisionService.headers" :items="divisionsStore.getDivisions" class="elevation-0">
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn
