@@ -31,7 +31,12 @@ For the entrance examination of Tap University, which emphasizes comprehensive a
 - Backend: NestJS, Swagger, CORS, Mongoose 
 - Database: MongoDB 
 - Docker: Docker, Docker compose 
-      
+
+## Architecture  
+<p align="center">
+  <img alt="Way Logo" src="https://github.com/nefayran/Way/blob/main/public/WayLogo.png">
+</p>
+
 ## Packages installation
 
 Install packages with pnpm
