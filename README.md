@@ -34,7 +34,7 @@ For the entrance examination of Tap University, which emphasizes comprehensive a
 
 ## Architecture  
 <p align="center">
-  <img alt="Way Logo" src="https://github.com/nefayran/Way/blob/main/public/WayLogo.png">
+  <img alt="Way Logo" src="https://github.com/nefayran/tap-university/blob/master/diagrams/Layers.png">
 </p>
 
 ## Packages installation
